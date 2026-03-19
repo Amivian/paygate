@@ -9,6 +9,9 @@
 
 declare(strict_types=1);
 
+// Force PHP to use Nigerian Time
+date_default_timezone_set('Africa/Lagos');
+
 function loadEnv(string $path): void
 {
     if (!file_exists($path)) {

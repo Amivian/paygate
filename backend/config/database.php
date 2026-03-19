@@ -34,6 +34,9 @@ function getDatabase(): PDO
             PDO::ATTR_EMULATE_PREPARES => false,
             PDO::ATTR_STRINGIFY_FETCHES => false,
         ]);
+
+        // Force MySQL connection to Nigerian time (WAT/UTC+1)
+        $pdo->exec("SET time_zone = '+01:00'");
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode([

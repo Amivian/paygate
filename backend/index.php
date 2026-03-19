@@ -23,8 +23,12 @@ Response::cors();
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Normalize: strip trailing slash, ensure leading slash
-$uri = '/' . trim($uri, '/');
+// Normalize: Extract the '/api/...' portion to support subdirectories
+if (preg_match('#(/api/.*)$#', $uri, $matches)) {
+    $uri = $matches[1];
+} else {
+    $uri = '/' . trim($uri, '/');
+}
 
 // ── Route definitions ───────────────────────────────────────────────
 $routes = [
